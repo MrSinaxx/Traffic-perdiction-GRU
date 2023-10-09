@@ -9,11 +9,11 @@ In this project, I will be exploring the dataset of four junctions and built a m
 
 
 
-**Loading Data** 
+## **Loading Data** 
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.002.png)
 
-**About the data** ˜
+## **About the data** 
 
 This dataset is a collection of numbers of vehicles at four junctions at an hourly frequency. The CSV file provides four features: 
 
@@ -24,7 +24,7 @@ This dataset is a collection of numbers of vehicles at four junctions at an hour
 
 The sensors on each of these junctions were collecting data at different times, hence the traffic data from different time periods. Some of the junctions have provided limited or sparse data. 
 
-**Data Exploration** 
+## **Data Exploration** 
 
 - Pharsing dates 
 - Ploting timeseris 
@@ -32,13 +32,13 @@ The sensors on each of these junctions were collecting data at different times, 
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.003.jpeg)
 
-**Noticeable information in the above plot:** 
+## **Noticeable information in the above plot:** 
 
 - It can be seen here that the first junction is visibly having an upward trend. 
 - The data for the fourth junction is sparse starting only after 2017 
 - Seasonality is not evident from the above plot, So we must explore datetime composition to figure out more about it. 
 
-**Feature Engineering** 
+## **Feature Engineering** 
 
 At this step, I am creating a few new features out of DateTime. Namely: 
 
@@ -50,7 +50,7 @@ At this step, I am creating a few new features out of DateTime. Namely:
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.004.png)
 
-**Exploratory Data Analysis** 
+## **Exploratory Data Analysis** 
 
 Plotting the newly created features
 
@@ -64,7 +64,7 @@ Plotting the newly created features
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.009.png)
 
-**From the above plot following things can be concluded:** 
+## **From the above plot following things can be concluded:** 
 
 - Yearly, there has been an upward trend for all junctions except for the fourth junction. As we already established above that the fourth junction has limited data and that don't span over a year. 
 - We can see that there is an influx in the first and second junctions around June. I presume this may be due to summer break and activities around the same. 
@@ -72,9 +72,9 @@ Plotting the newly created features
 - For a day, we can see that are peaks during morning and evening times and a decline during night hours. This is as per expectation. 
 - For weekly patterns, Sundays enjoy smoother traffic as there are lesser vehicles on roads. Whereas Monday to Friday the traffic is steady. 
 
-**Data Transformation And Preprocessing** 
+# **Data Transformation And Preprocessing** 
 
-**In this step I will be following the subsequent order:** 
+## **In this step I will be following the subsequent order:** 
 
 - Creating different frames for each Junction and plotting them 
 - Transforming the series and plotting them 
@@ -85,7 +85,7 @@ Plotting the newly created features
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.011.jpeg)
 
-**Steps for Transforming:**
+## **Steps for Transforming:**
 
 - Normalizing 
 - Differencing 
@@ -96,7 +96,7 @@ In accordance with the above observations, Differencing to eliminate the seasona
 - For junction two, The difference of consecutive days is a better choice 
 - For Junctions three and four, the difference of the hourly values will serve the purpose. 
 
-**Plots of Transformed Dataframe**
+## **Plots of Transformed Dataframe**
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.012.jpeg)
 
@@ -106,25 +106,25 @@ The Augmented Dickey-Fuller (ADF) test is a statistical test used to determine w
 
 In simpler terms, it helps us understand whether a time series has a trend or not. If there is no trend, then it is said to be stationary. 
 
-**Now that the data is stationary, preprocessing the data for the neural net by:** 
+## **Now that the data is stationary, preprocessing the data for the neural net by:** 
 
 - Splitting the test train sets 
 - Assigning X as features and y as target 
 - Reshaping data for neural net 
 
-**Model Building** 
+## **Model Building** 
 
 For this project, I have settled to use Gated Recurrent Unit (GRU). In this section, I am creating a function for the neural net to call on and fit the data frames for all four junctions. 
 
-**A short introduction for (GRU)** 
+## **A short introduction for (GRU)** 
 
 A Gated Recurrent Unit (GRU) is a type of Recurrent Neural Network (RNN) architecture that was introduced as a simpler alternative to Long Short-Term Memory (LSTM) networks. GRU networks process sequential data such as time series or natural language by bypassing the hidden state from one time step to the next. The hidden state is a vector that captures the information from the past time steps relevant to the current time step. 
 
-**Fitting The Model** 
+## **Fitting The Model** 
 
 Now, I will be fitting the transformed training sets of four junctions to the model created and compare them to the transformed test sets. 
 
-**Fitting the first junction and plotting the predictions and test set.** 
+ **Fitting the first junction and plotting the predictions and test set.** 
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.013.png)
 
@@ -140,13 +140,13 @@ Now, I will be fitting the transformed training sets of four junctions to the mo
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.016.png)
 
-**The results of the model** 
+## **The results of the model** 
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.017.png)
 
 The Root Mean Square Error is quite a subjective marker for evaluating the performance. The Root Mean Square Error (RMSE) tells us how concentrated the data is around the line of best fit. It is a measure of how spread out the residuals are. Residuals are a measure of how far from the regression line data points are. The RMSE value should be as low as possible. A lower RMSE value indicates that the predicted values are closer to the actual values. Thus, in this project, I am including the outcome plots as well.
 
-**Inversing The Transformation of Data** 
+## **Inversing The Transformation of Data** 
 
 In this section, I will be inversing transforms that I applied to the datasets to remove the seasonality and trends. Performing this step will make the predictions get back on the accurate scale. Time series datasets may contain trends and seasonality, which may need to be removed prior to modeling. 
 
@@ -168,7 +168,7 @@ Trends can result in a varying mean over time, whereas seasonality can result in
 
 ![](images/Aspose.Words.96c209c6-32e0-485c-a87d-a13b5ba8ea90.021.jpeg)
 
-Summary 
+# Summary 
 
 In this project, I trained a GRU Neural network to predicted the traffic on four junctions. I used a normalization and differencing transform to achieve a stationary timeseries. As the Junctions vary in trends and seasonality, I took different approach for each junction to make it stationary. I applied the root mean squared error as the evaluation metric for the model. In addition to that I plotted the Predictions alongside the original test values. Take always from the data analysis: 
 
